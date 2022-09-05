@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Registro de usuarios</title>
+
+</head>
+
+<body>
+
+    <body ng-controller="RegisterCtrl" ng-app="myApp">
+        <div class="container">
+            <div id="signup">
+                <div class="signup-screen">
+                    <div class="space-bot text-center">
+                        <h1>Registro de Usuarios</h1>
+                        <div class="divider"></div>
+                    </div>
+                    <form class="form-register" action="php/registro.php" method="POST" onsubmit="return validar();">
+                        <div class="input-field col s6">
+                            <input id="first-name" type="text" name="first-name" class="validate" placeholder="Nombre: " required>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="last-name" type="text" name="last-name" class="validate" placeholder="Apellido: " required>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="username" type="text" name="username" class="validate" placeholder="Nombre de usuario: " required>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="email" type="email" name="email" ng-model="email" class="validate" placeholder="Correo: " required>
+                        </div>
+                        <p class="alert alert-danger" ng-show="form-register.email.$error.email">Your email is invalid.
+                        </p>
+                        <div class="input-field col s6">
+                            <input id="pass" type="password" name="pass" placeholder="Contraseña: " ng-model="password"
+                                class="validate" required>
+                        </div>
+
+                        <p class="alert alert-danger"
+                            ng-show="form-register.password.$error.minlength || form.password.$invalid">Your password
+                            must be at least 6 characters.</p>
+                        <div class="space-top text-center">
+                            <input class="waves-effect waves-light btn" type="submit" value="Enviar" onclick="validar();">
+                            <button type="button" class="waves-effect waves-light btn danger">
+                                <i class="material-icons left">clear</i>Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</body>
+<script src="js/app.js"></script>
+</html>
