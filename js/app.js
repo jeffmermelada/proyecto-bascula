@@ -1,10 +1,8 @@
-var nombre = document.getElementById('first-name');
-var apellido = document.getElementById('last-name');
 var correo = document.getElementById('email');
 var username = document.getElementById('username');
 var pass = document.getElementById('pass');
 
-const emailregex = "/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i";
+var email = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
 
 var validacion = {
 
@@ -17,111 +15,72 @@ var validacion = {
 
 
 function validar(){
-
-    if(nombre.value == '' || nombre.value.length < 0){
+    if(username.value == ''){
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Debes colocar tu nombre',
+            text: 'Debes colocar tu nombre de usuario',
           })
           validacion.nombre = false;
           return false;  
-
-    } else if (!isNaN(nombre.value)){
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'No puedes colocar números y carácteres especiales en tu nombre',
-          })
-          validacion.apellido = false;
-          return false; 
     }
 
-    if(apellido.value == '' || apellido.value.length < 0){
+    if(username.value.length > 8){
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Debes colocar tu apellido',
+            text: 'Pon un nombre mas corto',
           })
+          validacion.nombre = false;
           return false;  
-          
-    } else if (!isNaN(apellido.value)){
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'No puedes colocar números y carácteres especiales en tu apellido',
-          })
-          return false; 
     }
 
-    
     if(correo.value == ''){
-        validacion.correo = false; 
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Debes ingresar un correo',
+            text: 'No dejes vacio tu correo',
           })
-          return false;
-
-    } else if(!emailregex.test(correo.value)){
-        validacion.correo = false; 
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Debes ingresar un correo valido',
-          })
-          return false;
+          validacion.nombre = false;
+          return false;  
     }
-    
-    if(username.value == ''){
-        validacion.user = false;
+
+    if(!email.test(correo.value)){
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Debes ingresar un nombre de usuario',
+            text: 'Coloca un correo correcto',
           })
-        return false;
-        
-    } else if(username.value.length > 8){
-        validacion.user = false;
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Solo se permiten nombres cortos (8 letras)',
-          })
-          return false;
+          validacion.nombre = false;
+          return false;  
     }
 
     if(pass.value == ''){
-        validacion.pass = false;
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Debes ingresar una contraseña',
+            text: 'Coloca una contraseña',
           })
-          return false;
-    } else if(pass.value == ''){
-        validacion.pass = false;
+    }
+
+    if(pass.value.length > 16){
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Debes ingresa una contraseña mas corta (16 digitos)',
+            text: 'Pon una contraseña mas corta',
           })
-          return false;
-    } 
+          validacion.nombre = false;
+          return false;  
+    }
 
-    if(validacion.nombre && validacion.apellido && validacion.correo && validacion.user && validacion.pass){
-        Swal.fire(
-            'Good job!',
-            'You clicked the button!',
-            'success'
-        )
-        return true;
-
-    } else {
-
-        return false;
+    if(pass.value.length < 3){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Pon una contraseña mas larga',
+          })
+          validacion.nombre = false;
+          return false;  
     }
     
 }

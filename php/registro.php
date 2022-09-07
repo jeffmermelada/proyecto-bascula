@@ -3,11 +3,11 @@
 	include 'conexion.php';
 	include 'SED.php';
 
-	$nombre = $_POST['first-name'];
-	$apellido = $_POST['last-name'];
 	$email = $_POST['email'];
 	$user = $_POST['username'];
 	$pass = $_POST['pass'];
+
+	$validar = true;
 
 	$passWord=SED::encryption($pass);
 	$clave_real=SED::decryption($passWord);
@@ -17,18 +17,29 @@
 	$telefono = $_POST['telefono'];
 	$genero = $_POST['genero'];*/
 
+	$consulta = "SELECT * FROM `registro_usuario`";
 
-	$consulta = "INSERT INTO `registro_usuario`(`id_usuario`, `nombre_usuario`, `apellido_usuario`, `username_usuario`, `correo_usuario`, `password_usuario`) 
-	VALUES (null, '$nombre', '$apellido', '$user', '$email', '$passWord')";
+	$result = mysqli_query($conexion, $consulta);
 
-	$insertar = mysqli_query($conexion, $consulta);
+	if($result){
+		while($row = mysqli_fetch_array($result)){
+			$id = $row["id"];
+			$user_bd = $row["username_usuario"];
+			$correo = $row["correo_usuario"];
+			$psw = $row["password_usuario"];
 
+			if($user_bd == $user)
+			{
+				$validar = false;
+			}
+		}
+	} 
 
-	if($insertar){
+	$consulta = "INSERT INTO `registro_usuario`(`id_usuario`, `username_usuario`, `correo_usuario`, `password_usuario`) 
+	VALUES (null, '$user', '$email', '$passWord')";
 
-		echo "REGISTRO GUARDADO";
-	} else {
-		echo "NO SE HA PODIDO REGISTRAR";
+	if($validar){
+		$insertar = mysqli_query($conexion, $consulta);
 	}
 
 	ob_end_clean();
@@ -44,12 +55,28 @@
     <title>Registro exitoso</title>
 </head>
 <body>
-<script>
+
+<?php
+
+if($validar){
+	echo "<script>
 	Swal.fire(
-            'Good job!',
-            'You clicked the button!',
-            'success'
-        )
-</script>
+		'success',
+		'¡Se han registrado tus datos!'
+	)
+	</script>";
+
+} 
+
+if(!$validar){
+	echo "<script>
+	Swal.fire(
+		'error',
+		'¡No se ha podido registrar!'
+	)
+	</script>";
+}
+?>
+
 </body>
 </html>

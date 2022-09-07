@@ -26,13 +26,7 @@
                         <h1>Registro de Usuarios</h1>
                         <div class="divider"></div>
                     </div>
-                    <form class="form-register" action="php/registro.php" method="POST" onsubmit="return validar();">
-                        <div class="input-field col s6">
-                            <input id="first-name" type="text" name="first-name" class="validate" placeholder="Nombre: " required>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="last-name" type="text" name="last-name" class="validate" placeholder="Apellido: " required>
-                        </div>
+                    <form class="form-register" action="php/registro.php" method="POST" onsubmit="return validar();" novalidate>
                         <div class="input-field col s6">
                             <input id="username" type="text" name="username" class="validate" placeholder="Nombre de usuario: " required>
                         </div>
